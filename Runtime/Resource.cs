@@ -25,7 +25,7 @@ namespace EMT
         public float Value
         {
             get { return _value; }
-            set { val = Mathf.Clamp(value, 0, max); }
+            set { _value = Mathf.Clamp(value, 0, Max); }
         }
 
         // Events
