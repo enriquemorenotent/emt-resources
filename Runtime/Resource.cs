@@ -1,16 +1,16 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace EMT
 {
-    [System.Serializable]
-    public class ResourceEvent : UnityEvent<float, float, float> { }
-
     public class Resource : MonoBehaviour, IResource
     {
         // Attributes
 
-        [SerializeField] private string name;
+        [SerializeField] private string label;
+
+        private List<ResourceModifier> modifiers = new List<ResourceModifier>();
 
         // Properties
 
@@ -52,7 +52,10 @@ namespace EMT
             onUpdate.Invoke(amount, Value, Max);
         }
 
-        // Operators override
+        public void UpdateOverTime(float frequency, float duration, float amount) =>
+            modifiers.Add(new ResourceModifier(frequency, duration, amount));
+
+        #region Operator override
 
         public static Resource operator +(Resource resource, float amount)
         {
@@ -64,6 +67,22 @@ namespace EMT
         {
             resource.Value -= amount;
             return resource;
+        }
+
+        #endregion
+
+        // Unity methods
+
+        void Update()
+        {
+            modifiers.ForEach(modifier => modifier.ApplyDeltaTime(Time.deltaTime));
+            modifiers.RemoveAll(modifier => modifier.HasExpired());
+
+            float amount = 0f;
+            modifiers.ForEach(modifier => amount += modifier.Execute());
+            Value -= amount;
+
+            onUpdate.Invoke(amount, Value, Max);
         }
     }
 }
