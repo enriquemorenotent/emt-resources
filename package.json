@@ -1,0 +1,14 @@
+{
+    "name": "com.emt.resources",
+    "version": "1.0.0",
+    "displayName": "EMT Resources",
+    "description": "Manage all kind of resources",
+    "unity": "2019.3",
+    "dependencies": {},
+    "keywords": [],
+    "author": {
+        "name": "Enrique Moreno Tent",
+        "email": "enriquemorenotent@gmail.com",
+        "url": "https://enriquemorenotent.com"
+    }
+}
