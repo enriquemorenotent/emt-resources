@@ -75,11 +75,16 @@ namespace EMT
 
         void Update()
         {
+            if (modifiers.Count == 0) return;
+
             modifiers.ForEach(modifier => modifier.ApplyDeltaTime(Time.deltaTime));
             modifiers.RemoveAll(modifier => modifier.HasExpired());
 
             float amount = 0f;
             modifiers.ForEach(modifier => amount += modifier.Execute());
+
+            if (amount == 0) return;
+
             Value -= amount;
 
             onUpdate.Invoke(amount, Value, Max);
