@@ -40,6 +40,8 @@ namespace EMT
 
         public bool HasAtLeast(float leastValue) => Value >= leastValue;
 
+        public float Percentage() => Value / Max;
+
         public void Fill() => Value = Max;
 
         public void Deplete() => Value = 0;
