@@ -1,3 +1,6 @@
+using UnityEngine;
+using UnityEngine.Events;
+
 namespace EMT
 {
     [System.Serializable]
