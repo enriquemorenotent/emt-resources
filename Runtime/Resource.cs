@@ -8,6 +8,10 @@ namespace EMT
 
     public class Resource : MonoBehaviour, IResource
     {
+        // Attributes
+
+        [SerializeField] private string name;
+
         // Properties
 
         private float _max;
@@ -48,13 +52,13 @@ namespace EMT
 
         // Operators override
 
-        public static FillableResource operator +(FillableResource resource, float amount)
+        public static Resource operator +(Resource resource, float amount)
         {
             resource.Value += amount;
             return resource;
         }
 
-        public static FillableResource operator -(FillableResource resource, float amount)
+        public static Resource operator -(Resource resource, float amount)
         {
             resource.Value -= amount;
             return resource;
