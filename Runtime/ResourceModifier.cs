@@ -2,7 +2,9 @@ using UnityEngine;
 
 namespace EMT
 {
-    public class ResourceModifier
+    // Modifies a resource for an certain time
+    // on small regular periods of time
+    public class ResourceTimeModifier : IResourceModifier
     {
         public float frequency;
         public float duration;
@@ -10,10 +12,9 @@ namespace EMT
 
         private float timeToNextExecution;
         private float timeToExpiration;
-        private int executionsScheduled = 0;
         private bool infinite;
 
-        public ResourceModifier(float _frequency, float _delta, float _duration)
+        public ResourceTimeModifier(float _frequency, float _delta, float _duration)
         {
             infinite = false;
             duration = _duration;
@@ -24,7 +25,7 @@ namespace EMT
             timeToExpiration = duration;
         }
 
-        public ResourceModifier(float _frequency, float _delta)
+        public ResourceTimeModifier(float _frequency, float _delta)
         {
             infinite = true;
             duration = 1;
@@ -35,28 +36,23 @@ namespace EMT
             timeToExpiration = duration;
         }
 
-        public void ApplyDeltaTime(float deltaTime)
-        {
-            if (!infinite) timeToExpiration -= deltaTime;
-            timeToNextExecution -= deltaTime;
-        }
-
         public bool HasExpired() => timeToExpiration < 0;
 
         public bool IsInfinite() => infinite;
 
         // Returns the damage scheduled and resets timers
-        public float Execute()
+        public float Execute(float deltaTime)
         {
-            if (timeToNextExecution < 0)
-            {
-                var timeSinceLastExecution = Mathf.Abs(timeToNextExecution);
-                executionsScheduled += (int)(timeSinceLastExecution / frequency) + 1;
-                timeToNextExecution = timeSinceLastExecution % frequency;
-            }
+            if (!infinite) timeToExpiration -= deltaTime;
+            timeToNextExecution -= deltaTime;
+
+            if (timeToNextExecution > 0) return 0;
+
+            var timeSinceLastExecution = Mathf.Abs(timeToNextExecution);
+            int executionsScheduled = (int)(timeSinceLastExecution / frequency) + 1;
+            timeToNextExecution = timeSinceLastExecution % frequency;
 
             var totalDelta = delta * executionsScheduled;
-            executionsScheduled = 0;
             return totalDelta;
         }
     }

@@ -10,7 +10,7 @@ namespace EMT
 
         [SerializeField] private string label;
 
-        private List<ResourceModifier> modifiers = new List<ResourceModifier>();
+        private List<IResourceModifier> modifiers = new List<IResourceModifier>();
 
         // Properties
 
@@ -52,8 +52,10 @@ namespace EMT
             onUpdate.Invoke(amount, Value, Max);
         }
 
+        public void AddModifier(IResourceModifier modifier) => modifiers.Add(modifier);
+
         public void UpdateOverTime(float frequency, float duration, float amount) =>
-            modifiers.Add(new ResourceModifier(frequency, duration, amount));
+            modifiers.Add(new ResourceTimeModifier(frequency, duration, amount));
 
         #region Operator override
 
@@ -77,11 +79,10 @@ namespace EMT
         {
             if (modifiers.Count == 0) return;
 
-            modifiers.ForEach(modifier => modifier.ApplyDeltaTime(Time.deltaTime));
             modifiers.RemoveAll(modifier => modifier.HasExpired());
 
             float amount = 0f;
-            modifiers.ForEach(modifier => amount += modifier.Execute());
+            modifiers.ForEach(modifier => amount += modifier.Execute(Time.deltaTime));
 
             if (amount == 0) return;
 
