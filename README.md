@@ -17,23 +17,23 @@ Returns if the `Value` of the resource equals zero
 
 Return if the `Value` of the resource equals `Max`
 
-    public bool HasAtLeast(float leastValue) => Value >= leastValue;
+    public bool HasAtLeast(float leastValue);
 
 Returns if the `Value` of the resource is equals or greater than `leaveValue`
 
-    public float Percentage() => Value / Max;
+    public float Percentage();
 
 Return the percentage of the resource, in relationship to its `Max`
 
-    public void Fill() => Value = Max;
+    public void Fill();
 
 Sets the `Value` of the resource equal to its `Max`
 
-    public void Deplete() => Value = 0;
+    public void Deplete();
 
 Sets the `Value` of the resource equal to zero
 
-    public void Add(float amount)
+    public void Add(float amount);
 
 Adds the `amount` to the `Value` of the resource
 
