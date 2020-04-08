@@ -41,7 +41,7 @@ namespace EMT
         public bool IsInfinite() => infinite;
 
         // Returns the damage scheduled and resets timers
-        public float Execute(float deltaTime)
+        public float Execute(Resource resource, float deltaTime)
         {
             if (!infinite) timeToExpiration -= deltaTime;
             timeToNextExecution -= deltaTime;

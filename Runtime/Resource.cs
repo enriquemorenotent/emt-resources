@@ -82,7 +82,8 @@ namespace EMT
             modifiers.RemoveAll(modifier => modifier.HasExpired());
 
             float amount = 0f;
-            modifiers.ForEach(modifier => amount += modifier.Execute(Time.deltaTime));
+
+            modifiers.ForEach(modifier => amount += modifier.Execute(this, Time.deltaTime));
 
             if (amount == 0) return;
 

@@ -5,6 +5,6 @@ namespace EMT
         bool HasExpired();
 
         // Returns the amount to modify
-        float Execute(float deltaTime);
+        float Execute(Resource resource, float deltaTime);
     }
 }
