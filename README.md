@@ -57,7 +57,7 @@ Imagine that your character gets poisoned and you want it to lose 2 points of HP
 ```cs
 Resource hp = player.GetComponent<Resource>();
 
-ResourceTimeModifier poisonModifier = new ResourceTimeModifier(5, 2, 30);
+ResourceTimeModifier poisonModifier = new ResourceTimeModifier(5, -2, 30);
 
 hp.AddModifier(poisonModifier);
 ```
