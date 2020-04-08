@@ -14,18 +14,23 @@ namespace EMT
 
         // Properties
 
-        private float _max;
+        [SerializeField] private float _max;
         public float Max
         {
             get { return _max; }
             set { _max = value; }
         }
 
-        private float _value;
+        [SerializeField] private float _value;
         public float Value
         {
             get { return _value; }
-            set { _value = Mathf.Clamp(value, 0, Max); }
+            set
+            {
+                var delta = value - Value;
+                _value = Mathf.Clamp(value, 0, Max);
+                onUpdate.Invoke(delta, Value, Max);
+            }
         }
 
         // Events
@@ -87,9 +92,7 @@ namespace EMT
 
             if (amount == 0) return;
 
-            Value -= amount;
-
-            onUpdate.Invoke(amount, Value, Max);
+            Value += amount;
         }
     }
 }

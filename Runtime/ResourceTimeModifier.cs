@@ -50,7 +50,7 @@ namespace EMT
 
             var timeSinceLastExecution = Mathf.Abs(timeToNextExecution);
             int executionsScheduled = (int)(timeSinceLastExecution / frequency) + 1;
-            timeToNextExecution = timeSinceLastExecution % frequency;
+            timeToNextExecution = frequency - timeSinceLastExecution % frequency;
 
             var totalDelta = delta * executionsScheduled;
             return totalDelta;
