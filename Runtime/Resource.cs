@@ -56,7 +56,6 @@ namespace EMT
         public void Add(float amount)
         {
             Value += amount;
-            onUpdate.Invoke(amount, Value, Max);
         }
 
         public void AddModifier(IResourceModifier modifier) => modifiers.Add(modifier);
