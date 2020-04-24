@@ -8,5 +8,6 @@ namespace EMT
         void Fill();
         void Deplete();
         void Add(float amount);
+        string GetLabel();
     }
 }

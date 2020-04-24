@@ -39,6 +39,8 @@ namespace EMT
 
         // Methods
 
+        public string GetLabel() => label;
+
         public bool IsEmpty() => Value == 0;
 
         public bool IsFull() => Value == Max;
